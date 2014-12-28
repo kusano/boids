@@ -20,11 +20,23 @@
   </div>
   
   <h2>このサービスについて</h2>
-  <p>
-    Boids Mailは最大 @Play.current.configuration.getString("application.maxAddress") 個のメールアドレスを発行可能な受信専用のメールサービスです。
-    どのメールアドレスに届いたメールも同一のPOP3アカウントで受信することができます。
-    サービスごとに異なるメールアドレスを登録することで、メールアドレスが迷惑メール送信業者に漏洩しても個別にメールアドレスを無効化することができます。
-  </p>
+
+  <div class="row">
+    <div class="col-md-8">
+      <p>
+        Boids Mailは最大 @Play.current.configuration.getString("application.maxAddress") 個のメールアドレスを発行可能な受信専用のメールサービスです。
+        どのメールアドレスに届いたメールも同一のPOP3アカウントで受信することができます。
+      </p>
+      <p>
+        サービスごとに異なるメールアドレスを登録することで、メールアドレス漏洩しても個別にメールアドレスを無効化することができます。
+      </p>
+    </div>
+    <div class="col-md-4">
+      <a href="@routes.Assets.at("images/ss.png")">
+        <img src="@routes.Assets.at("images/ss.png")" alt="スクリーンショット" class="img-thumbnail">
+      </a>
+    </div>
+  </div>
   
   @if(user.isEmpty) {
     <h2>アカウント作成</h2>
