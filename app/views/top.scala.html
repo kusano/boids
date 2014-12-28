@@ -1,0 +1,52 @@
+@(user: User)(implicit request: RequestHeader)
+
+@import helper._
+@import play.api.Play
+
+@main("top", Some(user)) {
+
+<div>
+  <button id="createAddress" class="btn btn-primary btn-lg">アドレス作成</button>
+</div>
+
+<h1>アドレス一覧</h1>
+
+<div class="row">
+  <div class="col-md-6">
+    <form id="filter">
+      <div class="input-group">
+        <input type="text" class="form-control">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="submit">検索</button>
+        </span>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="includeInactive"> 削除したアドレスを表示する
+      </label>
+    </div>
+  </div>
+</div>
+
+<table class="table">
+ <thead>
+   <tr id="addressListHeader">
+     <th><a id="address" href="#">アドレス <span></span></a></th>
+     <th><a id="memo" href="#">メモ <span></span></a></th>
+     <th><a id="created_at" href="#">作成日時 <span></span></a></th>
+     <th><a id="modified_at" href="#">更新日時 <span></span></a></th>
+     <th><a id="active" href="#">削除 <span></span></a></th>
+   </tr>
+ </thead>
+ <tbody id="addressList">
+ </tbody>
+</table>
+
+<div class="text-center">
+  <button class="btn btn-default" id="continue">続きを読み込む</button>
+</div>
+
+}

@@ -1,0 +1,24 @@
+@(user: User, password: String, resetKey: String)(implicit request: RequestHeader)
+
+@main("newaccount", None) {
+  <p>
+    あなたのアカウントを発行しました。
+  </p>
+  <p>
+    パスワードとパスワードリセットキーはこの画面にしか表示されません。
+    パスワード管理ソフトなどに保存してください。
+  </p>
+  <p>
+    パスワードリセットキーは、パスワードを紛失した場合や第三者にパスワードを変更された場合に、パスワードを初期化するためにのみ使用します。
+    再発行や変更はできません。
+  </p>
+  <h2>アカウント情報</h2>
+  <dl>
+    <dt>ID:</dt>
+    <dd><input type="text" class="form-control" readonly="readonly" value="@user.name"></dd>
+    <dt>Password:</dt>
+    <dd><input type="text" class="form-control" readonly="readonly" value="@password"></dd>
+    <dt>Password reset key:</dt>
+    <dd><input type="text" class="form-control" readonly="readonly" value="@resetKey"></dd>
+  </dl>
+}

@@ -1,0 +1,19 @@
+.warning {
+  margin: 16px 0;
+  font-weight: bold;
+  color: red;
+}
+.banner {
+  color: #456;
+  font-style: italic;
+  padding: 16px;
+  background: url(/assets/images/banner.jpg) right;
+  height: 160px;
+}
+.banner h1 {
+  margin: 0;
+}
+.form-control[readonly] {
+  cursor: text !important;
+  background-color: #fcfcff !important;
+}

@@ -1,0 +1,42 @@
+@(user: User)(implicit request: RequestHeader)
+
+@import helper._
+@import play.api.Play
+
+@main("account", Some(user)) {
+
+<h1>アカウント情報</h1>
+
+<div class="panel panel-default">
+  <div class="panel-heading">Boids Mailアカウント</div>
+  <div class="panel-body">
+    <p>このサイト上のアカウントです。</p>
+    <dl>
+      <dt>ID:</dt>
+      <dd><input type="text" class="form-control" readonly="readonly" value="@user.name"></dd>
+    </dl>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">メールアカウント</div>
+  <div class="panel-body">
+    <p>メーラーに設定するアカウント情報です。</p>
+    <dl>
+      <dt>サーバーの種類</dt>
+      <dd>POP（IMAPには対応していません）</dd>
+      <dt>サーバー名</dt>
+      <dd><input type="text" class="form-control" readonly="readonly" value="boids.info"></dd>
+      <dt>POP3 ID:</dt>
+      <dd><input type="text" class="form-control" readonly="readonly" value="@user.popId"></dd>
+      <dt>POP3パスワード:</dt>
+      <dd><input type="text" class="form-control" readonly="readonly" value="@user.popPassword"></dd>
+      <dt>暗号方式:</dt>
+      <dd>SSL（推奨） / 無し</dd>
+      <dt>認証方式:</dt>
+      <dd>APOP（推奨） / CRAM-MD5 / パスワード / 無し</dd>
+    </dl>
+  </div>
+</div>
+
+}

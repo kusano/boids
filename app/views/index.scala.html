@@ -1,0 +1,60 @@
+@(user: Option[User])(implicit request: RequestHeader)
+
+@import helper._
+@import play.api.Play
+
+@main("index", user) {
+  
+  <div class="warning">
+    実験段階のサービスです。
+    プログラムのバグやその他の理由により、他人があなた宛のメールを読む可能性があります。
+    サービスの中止やその他の理由により、予告無くあなたがあなた宛のメールを読むことができなくなる可能性があります。<br>
+    This service is experimental.
+    Someone might read your e-mails.
+    You might lose access to your e-mails.
+  </div>
+  
+  <div class="banner">
+    <h1>Boids Mail</h1>
+    <p>最大 @Play.current.configuration.getString("application.maxAddress") 個のメールアドレスを発行可能な受信専用のメールサービスです</p>
+  </div>
+  
+  <h2>このサービスについて</h2>
+  <p>
+    Boids Mailは最大 @Play.current.configuration.getString("application.maxAddress") 個のメールアドレスを発行可能な受信専用のメールサービスです。
+    どのメールアドレスに届いたメールも同一のPOP3アカウントで受信することができます。
+    サービスごとに異なるメールアドレスを登録することで、メールアドレスが迷惑メール送信業者に漏洩しても個別にメールアドレスを無効化することができます。
+  </p>
+  
+  <h2>アカウント作成</h2>
+  <form action="/account" method="post">
+    @CSRF.formField
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="agree" value="1">
+        本ページ冒頭の注意書きの内容を理解した。
+      </label>
+    </div>
+    <div class="g-recaptcha" data-sitekey="6LeUpP8SAAAAAH0bUD9Haj9FS_JP-sXicm7hBjrv"></div>
+    <button class="btn btn-lg btn-primary" type="submit">アカウントを作成する</button>
+  </form>
+
+  @if(request.flash.get("error").isDefined) {
+    <div class="modal fade" id="error_dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">エラー</h4>
+          </div>
+          <div class="modal-body">
+            <p>@request.flash.get("error").get</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+}
