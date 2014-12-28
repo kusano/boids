@@ -26,18 +26,20 @@
     サービスごとに異なるメールアドレスを登録することで、メールアドレスが迷惑メール送信業者に漏洩しても個別にメールアドレスを無効化することができます。
   </p>
   
-  <h2>アカウント作成</h2>
-  <form action="/account" method="post">
-    @CSRF.formField
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" name="agree" value="1">
-        本ページ冒頭の注意書きの内容を理解した。
-      </label>
-    </div>
-    <div class="g-recaptcha" data-sitekey="6LeUpP8SAAAAAH0bUD9Haj9FS_JP-sXicm7hBjrv"></div>
-    <button class="btn btn-lg btn-primary" type="submit">アカウントを作成する</button>
-  </form>
+  @if(user.isEmpty) {
+    <h2>アカウント作成</h2>
+    <form action="/account" method="post">
+      @CSRF.formField
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="agree" value="1">
+          本ページ冒頭の注意書きの内容を理解した。
+        </label>
+      </div>
+      <div class="g-recaptcha" data-sitekey="6LeUpP8SAAAAAH0bUD9Haj9FS_JP-sXicm7hBjrv"></div>
+      <button class="btn btn-lg btn-primary" type="submit">アカウントを作成する</button>
+    </form>
+  }
 
   @if(request.flash.get("error").isDefined) {
     <div class="modal fade" id="error_dialog">
