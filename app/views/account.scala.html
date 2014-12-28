@@ -23,18 +23,20 @@
   <div class="panel-body">
     <p>メーラーに設定するアカウント情報です。</p>
     <dl>
-      <dt>サーバーの種類</dt>
+      <dt>サーバーの種類:</dt>
       <dd>POP（IMAPには対応していません）</dd>
-      <dt>サーバー名</dt>
+      <dt>サーバー名:</dt>
       <dd><input type="text" class="form-control" readonly="readonly" value="boids.info"></dd>
+      <dt>ポート番号:</dt>
+      <dd>110 (無し, STARTTSL), 995 (SSL/TLS)</dd>
       <dt>POP3 ID:</dt>
       <dd><input type="text" class="form-control" readonly="readonly" value="@user.popId"></dd>
       <dt>POP3パスワード:</dt>
       <dd><input type="text" class="form-control" readonly="readonly" value="@user.popPassword"></dd>
       <dt>暗号方式:</dt>
-      <dd>SSL（推奨） / 無し</dd>
+      <dd>SSL（推奨） / STARTTSL / 無し</dd>
       <dt>認証方式:</dt>
-      <dd>APOP（推奨） / CRAM-MD5 / パスワード / 無し</dd>
+      <dd>APOP（推奨） / CRAM-MD5 / 平文</dd>
     </dl>
   </div>
 </div>

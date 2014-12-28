@@ -14,3 +14,5 @@ evolutionplugin=disabled
 logger.root=INFO
 logger.play=INFO
 logger.application=INFO
+
+session.secure=true
