@@ -13,6 +13,8 @@ POST    /logout                     controllers.Application.logout
 POST    /address                    controllers.Application.createAddress
 PUT     /address                    controllers.Application.updateAddress
 POST    /list                       controllers.Application.listAddress
+GET     /resetpass                  controllers.Application.resetPasswordForm
+POST    /resetpass                  controllers.Application.resetPassword
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

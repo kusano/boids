@@ -1,0 +1,65 @@
+@(user: Option[User])(implicit request: RequestHeader)
+
+@import helper._
+@import play.api.Play
+
+@main("account", user) {
+
+<h1>パスワードの初期化</h1>
+
+<p class="warning">
+  現在のパスワード、もしくはパスワードリセットキーを入力して、パスワードをランダムな文字列に変更します。<br>
+  POP3のパスワードも同時に変更されます。
+</p>
+
+<div class="panel panel-default">
+  <div class="panel-heading">現在のパスワードで初期化</div>
+  <div class="panel-body">
+    @if(user.isDefined) {
+      <form action="/resetpass" method="post">
+        @CSRF.formField
+        <dl>
+          <dt>ID:</dt>
+          <dd>@user.get.name</dd>
+          <dt>パスワード:</dt>
+          <dd><input class="form-control" type="password" name="password"></dd>
+        </dl>
+        <div>
+          <button type="submit" class="btn btn-danger">初期化</button>
+        </div>
+        <input type="hidden" name="type" value="password">
+        <input type="hidden" name="resetkey">
+      </form>
+    } else {
+      <dl>
+        <dt>ID:</dt>
+        <dd>ログインしてください</dd>
+        <dt>パスワード:</dt>
+        <dd><input class="form-control" disabled="disabled"></dd>
+      </dl>
+      <div>
+        <button type="submit" class="btn btn-danger" disabled="disabled">初期化</button>
+      </div>
+    }
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">パスワードリセットキーで初期化</div>
+  <div class="panel-body">
+    <form action="/resetpass" method="post">
+      @CSRF.formField
+      <dl>
+        <dt>パスワードリセットキー:</dt>
+        <dd><input class="form-control" name="resetkey"></dd>
+      </dl>
+      <div>
+        <button type="submit" class="btn btn-danger">初期化</button>
+      </div>
+      <input type="hidden" name="type" value="resetkey">
+      <input type="hidden" name="password">
+    </form>
+  </div>
+</div>
+
+}

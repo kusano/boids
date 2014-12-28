@@ -281,4 +281,13 @@ object Application extends Controller {
     }
   }
 
+  def resetPasswordForm() = Action { implicit request =>
+    checkLogin({ user =>
+      Ok(views.html.resetpass(Some(user)))
+    }, {
+      Ok(views.html.resetpass(None))
+    })
+  }
+
+  def resetPassword() = TODO
 }
