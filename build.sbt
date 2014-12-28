@@ -11,5 +11,6 @@ libraryDependencies ++= Seq(
   anorm,
   cache,
   ws,
-  filters
+  filters,
+  "mysql" % "mysql-connector-java" % "5.1.27"
 )
