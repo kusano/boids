@@ -136,7 +136,7 @@ object Application extends Controller {
         )
       },
       user => {
-        val name = user._1
+        val name = User.trim(user._1)
         Logger.info(s"Login ($name)")
         Redirect(routes.Application.topPage).withSession("id" -> name)
       }
@@ -345,7 +345,7 @@ object Application extends Controller {
         Form("resetkey" -> text).bindFromRequest.fold( error => {
           redirect.flashing("errorResetKey" -> "パラメタエラー")
         }, resetKey => {
-          val user =User.findByResetKey(resetKey)
+          val user = User.findByResetKey(resetKey)
           if (user.isEmpty) {
             redirect.flashing("errorResetKey" -> "無効なリセットキーです")
           } else {

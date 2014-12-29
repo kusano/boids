@@ -118,8 +118,9 @@ object User {
 
   def authenticate(name: String, password: String): Option[User] = {
     DB.withConnection { implicit c =>
+      play.Logger.error(trim(name))
       SQL("select * from user where name={name} and password={password}")
-        .on('name -> name, 'password -> hashPassword(password))
+        .on('name -> trim(name), 'password -> hashPassword(trim(password)))
         .as(User.simple.singleOpt)
     }
   }
@@ -127,7 +128,7 @@ object User {
   def findByResetKey(resetKey: String): Option[User] = {
     DB.withConnection { implicit c =>
       SQL("select * from user where reset_key={resetKey}")
-        .on('resetKey -> hashPassword(resetKey))
+        .on('resetKey -> hashPassword(trim(resetKey)))
         .as(User.simple.singleOpt)
     }
   }
@@ -137,5 +138,9 @@ object User {
     (0 until 1000).foldLeft(password) { (s, _) =>
       digest.digest(s.getBytes).map("%02x".format(_)).mkString
     }
+  }
+
+  def trim(s: String): String = {
+    s.replaceAll("\\W", "")
   }
 }
