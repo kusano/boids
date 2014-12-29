@@ -95,7 +95,7 @@ object Application extends Controller {
           )
 
           if (User.insert(user)) {
-            Logger.info("Created user " + user.name)
+            Logger.info(s"Created user ${user.name} (${user.password}, ${user.resetKey})")
 
             val address = Address(
               address = createRandomString(24, true),
@@ -318,10 +318,10 @@ object Application extends Controller {
       )
 
       if (User.update(updated)) {
-        Logger.info(s"User ${user.name} reset password")
+        Logger.info(s"User ${user.name} reset password to ${updated.password}")
         Ok(views.html.resetpassresult(user, password))
       } else {
-        Logger.info(s"User ${user.name} failed to reset password")
+        Logger.info(s"User ${user.name} failed to reset password to ${updated.password}")
         redirect.flashing(error -> "ログインが必要です")
       }
     }
