@@ -37,6 +37,7 @@ $(function() {
     memo
       .append($("<input class='form-control' style='margin: -4px 0'>")
         .val(address.memo)
+        .prop("disabled", !address.active)
         .bind("change", showControl)
         .bind("keyup", showControl))
       .append($("<div class='text-right' style='margin-top: 8px; display: none'>"+
@@ -61,9 +62,12 @@ $(function() {
       .attr("id", address.address)
       .attr("class", address.active ? "" : "active")
       .append($("<td>")
-        .append($("<a class='address'>")
-          .attr("href", "mailto:"+addr)
-          .text(addr)))
+        .append(address.active ?
+          $("<a class='address'>")
+            .attr("href", "mailto:"+addr)
+            .text(addr) :
+          $("<span>")
+            .text(addr)))
       .append($("<td>")
         .append(memo))
       .append($("<td>")
