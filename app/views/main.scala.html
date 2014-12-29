@@ -36,7 +36,7 @@
             <li @if(page=="top"){class="active"}><a href="/top">アドレス一覧</a></li>
             <li @if(page=="account"){class="active"}><a href="/account">アカウント情報</a></li>
           }
-          <li @if(page=="top"){class="faq"}><a href="/faq">Q&A</a></li>
+          <li @if(page=="faq"){class="active"}><a href="/faq">Q&A</a></li>
         </ul>
         @if(user.isDefined) {
           <form class="navbar-form navbar-right" action="/logout" method="post">
