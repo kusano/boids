@@ -94,10 +94,21 @@ object Application extends Controller {
             active = true
           )
 
-          val result = User.insert(user)
-
-          if (result) {
+          if (User.insert(user)) {
             Logger.info("Created user " + user.name)
+
+            val address = Address(
+              address = createRandomString(24, true),
+              user = User.findByName(user.name).get.id.get,
+              memo = "",
+              active = true
+            )
+
+            if (Address.insert(address)) {
+              Logger.info(s"Created address ${address.address} for ${user.name}")
+            } else {
+              Logger.info(s"Failed to create address ${address.address} for ${user.name}")
+            }
             Ok(views.html.newaccount(user, password, resetKey))
           } else {
             Logger.error("Failed to create user " + user.name)
