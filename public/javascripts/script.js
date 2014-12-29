@@ -26,11 +26,29 @@ $(function() {
   });
 
   function createAddressRow(address) {
-    var memo = $("<td>").text(address.memo);
-    
-    if (address.active) {
-      memo.click(clickMemo.bind(memo, address))
+    var memo = $("<form>")
+
+    var showControl = function() {
+      if (memo.find("input").val() != address.memo) {
+        memo.find("div").css("display", "block");
+      }
     }
+
+    memo
+      .append($("<input class='form-control' style='margin: -4px 0'>")
+        .val(address.memo)
+        .bind("change", showControl)
+        .bind("keyup", showControl))
+      .append($("<div class='text-right' style='margin-top: 8px; display: none'>"+
+        "<button type='reset' class='btn btn-default'>キャンセル</button>&nbsp;"+
+        "<button type='submit' class='btn btn-primary'>保存</button>&nbsp;"+
+        "</div>"))
+      .submit(submitMemo.bind(memo, address))
+      .bind("reset", function(event) {
+        event.preventDefault();
+        memo.find("input").val(address.memo);
+        memo.find("div").css("display", "none");
+      })
     
     var button = address.active ?
       $("<button class='btn btn-danger btn-xs'><span class='glyphicon glyphicon-remove'></span></button>") :
@@ -46,7 +64,8 @@ $(function() {
         .append($("<a class='address'>")
           .attr("href", "mailto:"+addr)
           .text(addr)))
-      .append(memo)
+      .append($("<td>")
+        .append(memo))
       .append($("<td>")
         .text(address.created_at))
       .append($("<td>")
@@ -85,31 +104,12 @@ $(function() {
     });
   }
 
-  function clickMemo(address, event) {
-    var input = $("<input class='form-control'>")
-      .val(address.memo)
-      .blur(submitMemo.bind(this, address))
-
-    $(this)
-      .unbind()
-      .empty()
-      .append(input)
-    
-    input.focus()
-  }
-
   function submitMemo(address, event) {
-    var input = $(this).find("input");
-
-    if (address.memo == input.val()) {
-      $("#"+address.address).replaceWith(createAddressRow(address));
-      return;
-    }
+    event.preventDefault();
+    $(this).find("button[type=submit]").prop("disabled", true);
 
     var newaddr = address;
-    newaddr.memo = input.val();
-    
-    input.prop("disabled", true);
+    newaddr.memo = $(this).find("input").val();
 
     $.ajax({
       type: "PUT",
@@ -120,12 +120,12 @@ $(function() {
           $("#"+address.address).replaceWith(createAddressRow(newaddr));
         } else {
           alert(data.error);
-          input.prop("disabled", false);
+          $(this).find("button[type=submit]").prop("disabled", false);
         }
       },
       error: function() {
         alert("error");
-        input.prop("disabled", false);
+        $(this).find("button[type=submit]").prop("disabled", false);
       },
     });
   }

@@ -17,7 +17,7 @@ create table user (
 );
 
 create table address (
-    address varchar(255) primary key,
+    address varchar(127) primary key,
     user bigint not null,
     memo varchar(1023) not null,
 
