@@ -13,7 +13,6 @@
 .banner h1 {
   margin: 0;
 }
-.form-control[readonly] {
-  cursor: text !important;
-  background-color: #fcfcff !important;
+a.address {
+  font-family: monospace;
 }

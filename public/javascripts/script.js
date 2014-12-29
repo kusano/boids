@@ -37,12 +37,15 @@ $(function() {
       $("<button class='btn btn-primary btn-xs'>有効化</button>");
     button.click(activeAddress.bind(button, address));
 
+    var addr = address.address+"@"+$("#domain").val();
+
     return $("<tr>")
       .attr("id", address.address)
       .attr("class", address.active ? "" : "active")
       .append($("<td>")
-        .append($("<input class='form-control' readonly>")
-          .val(address.address+"@"+$("#domain").val())))
+        .append($("<a class='address'>")
+          .attr("href", "mailto:"+addr)
+          .text(addr)))
       .append(memo)
       .append($("<td>")
         .text(address.created_at))

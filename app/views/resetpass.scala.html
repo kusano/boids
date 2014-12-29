@@ -18,10 +18,10 @@
     @if(user.isDefined) {
       <form action="/resetpass" method="post">
         @CSRF.formField
-        <dl>
-          <dt>ID:</dt>
+        <dl class="dl-horizontal">
+          <dt>ID</dt>
           <dd>@user.get.name</dd>
-          <dt>パスワード:</dt>
+          <dt>パスワード</dt>
           <dd><input class="form-control" type="password" name="password"></dd>
         </dl>
         <div>
@@ -31,10 +31,10 @@
         <input type="hidden" name="resetkey">
       </form>
     } else {
-      <dl>
-        <dt>ID:</dt>
+      <dl class="dl-horizontal">
+        <dt>ID</dt>
         <dd>ログインしてください</dd>
-        <dt>パスワード:</dt>
+        <dt>パスワード</dt>
         <dd><input class="form-control" disabled="disabled"></dd>
       </dl>
       <div>
@@ -49,8 +49,8 @@
   <div class="panel-body">
     <form action="/resetpass" method="post">
       @CSRF.formField
-      <dl>
-        <dt>パスワードリセットキー:</dt>
+      <dl class="dl-horizontal">
+        <dt>パスワードリセットキー</dt>
         <dd><input class="form-control" name="resetkey"></dd>
       </dl>
       <div>
