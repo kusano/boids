@@ -217,7 +217,11 @@ $(function() {
   $("#filter").submit(function(event) {
     event.preventDefault();
     listAddress(true);
-  });
+  }).bind("reset", function(event) {
+    event.preventDefault();
+    $(this).find("input").val("");
+    listAddress(true);
+  })
   
   $("#includeInactive").change(function() {
     listAddress(true);
