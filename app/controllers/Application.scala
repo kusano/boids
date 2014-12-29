@@ -300,5 +300,60 @@ object Application extends Controller {
     })
   }
 
-  def resetPassword() = TODO
+  def resetPassword(method: String) = Action { implicit request =>
+    val redirect = Redirect(routes.Application.resetPasswordForm)
+
+    def reset(user: User, error: String) = {
+      val password = createRandomString(16)
+
+      val updated = User(
+        id = user.id,
+        name = user.name,
+        password = User.hashPassword(password),
+        resetKey = user.resetKey,
+        mailbox = user.mailbox,
+        popId = user.popId,
+        popPassword = createRandomString(16),
+        active = true
+      )
+
+      if (User.update(updated)) {
+        Logger.info(s"User ${user.name} reset password")
+        Ok(views.html.resetpassresult(user, password))
+      } else {
+        Logger.info(s"User ${user.name} failed to reset password")
+        redirect.flashing(error -> "ログインが必要です")
+      }
+    }
+
+    method match {
+      case "password" =>
+        checkLogin({ user =>
+          Form("password" -> text).bindFromRequest.fold( error => {
+            redirect.flashing("errorPassword" -> "パラメタエラー")
+          }, password => {
+            if (User.authenticate(user.name, password).isEmpty) {
+              redirect.flashing("errorPassword" -> "無効なパスワードです")
+            } else {
+              reset(user, "errorPassword")
+            }
+          })
+        }, {
+          redirect.flashing("errorPassword" -> "ログインが必要です")
+        })
+      case "resetkey" =>
+        Form("resetkey" -> text).bindFromRequest.fold( error => {
+          redirect.flashing("errorResetKey" -> "パラメタエラー")
+        }, resetKey => {
+          val user =User.findByResetKey(resetKey)
+          if (user.isEmpty) {
+            redirect.flashing("errorResetKey" -> "無効なリセットキーです")
+          } else {
+            reset(user.get, "errorResetKey")
+          }
+        })
+      case  _ =>
+        redirect
+    }
+  }
 }

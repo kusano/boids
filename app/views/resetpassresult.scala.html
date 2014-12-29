@@ -1,0 +1,20 @@
+@(user: User, password: String)(implicit request: RequestHeader)
+
+@import helper._
+@import play.api.Play
+
+@main("resetpass", None) {
+
+  <p>パスワードとPOP3のパスワードを変更しました。</p>
+  <p>あなたのIDとパスワードは下記の通りです。</p>
+  <p>POP3のパスワードはログイン後に「アカウント情報」から確認してください。</p>
+
+  <h2>アカウント情報</h2>
+  <dl class="dl-horizontal">
+    <dt>ID</dt>
+    <dd>@user.name</dd>
+    <dt>パスワード</dt>
+    <dd>@password</dd>
+  </dl>
+
+}

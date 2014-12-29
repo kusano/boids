@@ -15,6 +15,9 @@
 <div class="panel panel-default">
   <div class="panel-heading">現在のパスワードで初期化</div>
   <div class="panel-body">
+    @if(request.flash.get("errorPassword").isDefined) {
+      <p class="warning">@request.flash.get("errorPassword").get</p>
+    }
     @if(user.isDefined) {
       <form action="/resetpass/password" method="post">
         @CSRF.formField
@@ -47,6 +50,9 @@
 <div class="panel panel-default">
   <div class="panel-heading">パスワードリセットキーで初期化</div>
   <div class="panel-body">
+    @if(request.flash.get("errorResetKey").isDefined) {
+      <p class="warning">@request.flash.get("errorResetKey").get</p>
+    }
     <form action="/resetpass/resetkey" method="post">
       @CSRF.formField
       <dl class="dl-horizontal">

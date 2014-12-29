@@ -87,10 +87,47 @@ object User {
     }
   }
 
+  def update(user: User): Boolean = {
+    DB.withConnection { implicit c =>
+      SQL(
+        """
+          |update user set
+          | name = {name},
+          | password = {password},
+          | reset_key = {reset_key},
+          | mailbox = {mailbox},
+          | pop_id = {pop_id},
+          | pop_password = {pop_password},
+          | modified_at = {modified_at},
+          | active = {active}
+          |where id={id}
+        """.stripMargin
+      ).on(
+          'id -> user.id.get,
+          'name -> user.name,
+          'password -> user.password,
+          'reset_key -> user.resetKey,
+          'mailbox -> user.mailbox,
+          'pop_id -> user.popId,
+          'pop_password -> user.popPassword,
+          'modified_at -> new Date(),
+          'active -> (if (user.active) 1 else 0)
+        ).executeUpdate() == 1
+    }
+  }
+
   def authenticate(name: String, password: String): Option[User] = {
     DB.withConnection { implicit c =>
       SQL("select * from user where name={name} and password={password}")
         .on('name -> name, 'password -> hashPassword(password))
+        .as(User.simple.singleOpt)
+    }
+  }
+
+  def findByResetKey(resetKey: String): Option[User] = {
+    DB.withConnection { implicit c =>
+      SQL("select * from user where reset_key={resetKey}")
+        .on('resetKey -> hashPassword(resetKey))
         .as(User.simple.singleOpt)
     }
   }
