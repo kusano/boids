@@ -24,6 +24,11 @@
 <h3>@@boids.infoからメールを送信したい</h3>
 <p>スパムを送る人がいると面倒なので、メールを送信する機能は付けません。
 Gmailのメール送信元を変更する機能をお勧め……したかったのですが、<a href="https://productforums.google.com/forum/?hl=ja#!category-topic/gmail-ja/kK7cJQjc4_k">今は無くなった</a>ようですね……。</p>
+<p>
+と思っていたのですが、SMTPサーバーにsmtp.gmail.comを指定することで、今でも送信元を変更できるようです。@@cielavenirさん、ありがとうございました。<br>
+<a href="https://twitter.com/cielavenir/status/549942058912206848">https://twitter.com/cielavenir/status/549942058912206848</a><br>
+<a href="http://andmem.blogspot.jp/2014/08/gmail-issue-sender-adress.html">http://andmem.blogspot.jp/2014/08/gmail-issue-sender-adress.html</a><br>
+ただし、Return-Pathには、送信に使用したGmailのアカウントが記載されるようです。</p>
 
 <h3>パスワードを自分で設定したい</h3>
 <p>リスト型攻撃が蔓延しパスワードの使い回しができなくなった今となっては、人間がパスワードを決めるのは現実的ではありません。
