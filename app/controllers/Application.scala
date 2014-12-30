@@ -356,4 +356,40 @@ object Application extends Controller {
         redirect
     }
   }
+
+  def download(format: String) = Action { implicit request =>
+    checkLogin( user => {
+      val address = Address.findByUser(
+        user = user,
+        filter = "",
+        includeInactive = true,
+        orderBy = "address",
+        order = "asc",
+        offset = 0,
+        limit =  Play.configuration.getInt("application.maxAddress").get
+      )
+
+      format match {
+        case "csv" =>
+          val format = new SimpleDateFormat("yyyy/MM/dd HH:mm")
+          val header = """"address","memo","created_at","modified_at","active""""
+          val body = address.map { address =>
+            Seq(address.address+"@"+Play.configuration.getString("application.domain").get,
+              address.memo,
+              format.format(address.createdAt.get),
+              format.format(address.modifiedAt.get),
+              address.active.toString)
+              .map { "\"" + _.replaceAll("\"", "\"\"") + "\"" }
+              .mkString(",")
+            }
+          Ok((header +: body).mkString("\r\n"))
+            .as("text/csv")
+            .withHeaders("Content-disposition" -> "attachment; filename=address.csv")
+        case _ =>
+          BadRequest("フォーマット種別が不正です")
+      }
+    }, {
+      BadRequest("ログインが必要です")
+    })
+  }
 }

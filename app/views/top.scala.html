@@ -50,4 +50,12 @@
   <button class="btn btn-default" id="continue">続きを読み込む</button>
 </div>
 
+<h3>ダウンロード</h3>
+<div>
+  <form action="/download/csv" method="post" style="display:inline">
+    @CSRF.formField
+    <button class="btn btn-default">CSV</button>
+  </form>
+</div>
+
 }
