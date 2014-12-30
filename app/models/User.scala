@@ -118,7 +118,6 @@ object User {
 
   def authenticate(name: String, password: String): Option[User] = {
     DB.withConnection { implicit c =>
-      play.Logger.error(trim(name))
       SQL("select * from user where name={name} and password={password}")
         .on('name -> trim(name), 'password -> hashPassword(trim(password)))
         .as(User.simple.singleOpt)
